@@ -50,7 +50,7 @@
 
 <body>
 <div id = center>
-    <form action="register" method="post"
+    <form action="register.action" method="post"
           name = "regfrm" onsubmit="return validate();">
         <table class="hovertable">
             <tr>

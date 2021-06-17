@@ -2,65 +2,63 @@ package servlet;
 
 import utils.MysqlConnection;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet   {
 
 
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        req.setCharacterEncoding("utf-8");
-        resp.setCharacterEncoding("utf-8");
-        Connection conn = null;
-        Statement statement = null;
-        ResultSet result = null;
-        PrintWriter out = resp.getWriter();
+    public boolean checkLogin(ArrayList list)
+    {
+        String user = (String)list.get(0);
+        String password = (String)list.get(1);
+        boolean rt = false;
 
-        boolean isFind = false;
-        String user = req.getParameter("username");
-        String pwd = req.getParameter("password");
-        System.out.println("请求：user:" + user);
-        System.out.println("请求：pwd:" + pwd);
+        try
+        {
 
-        try {
-            conn = MysqlConnection.getInstance().getConnection();
-            statement = conn.createStatement();
-            result = statement.executeQuery("SELECT * FROM table_name ");
-            //循环遍历数据库，比对数据
-            while (result.next()) {
-                String db_user = result.getString("username");
-                String db_password = result.getString("password");
-                System.out.println("数据库：user:" + db_user);
-                System.out.println("数据库：pwd:" + db_password);
-                if (user.equals(db_user) && pwd.equals(db_password)) {
-                    isFind = true;
+            Connection conn = MysqlConnection.getConnection();
+            PreparedStatement p = conn.prepareStatement("select * from table_name ");
+            ResultSet rs = p.executeQuery();
+            HashMap<String,String> hm = new HashMap();
+            while(rs.next())
+            {
+                hm.put(rs.getString("username"), rs.getString("password"));
+            }
+            MysqlConnection.release(p, conn,rs);
+            Set<String> set = hm.keySet();
+            Iterator it = set.iterator();
+            while(it.hasNext())
+            {
+                if(it.next().equals(user))
+                {
 
-                    //req.getRequestDispatcher("welcome.jsp").forward(req,resp);
-                    break;
-                } else {
-                    isFind = false;
+                    if(password.equals(hm.get(user)))
+                    {
+                        rt = true;
+                        break;
+                    }
                 }
             }
-
-            if (isFind) {
-
-                out.println("find,login succeed");
-            } else {
-                out.println("not find,login failed");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            MysqlConnection.release(statement, conn, result);
         }
-
+        catch(SQLException e)
+        {
+            System.out.println("数据库出问题");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rt;
     }
+
 }

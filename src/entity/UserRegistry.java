@@ -2,20 +2,22 @@ package entity;
 
 import com.opensymphony.xwork2.ActionSupport;
 import servlet.LoginServlet;
+import servlet.RegisterServlet;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
-public class User extends ActionSupport {
-    private int id;
+public class UserRegistry extends ActionSupport {
     private String username;
     private String password;
+    private String password1;
 
-    public int getId() {
-        return id;
+    public String getPassword1() {
+        return password1;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPassword1(String password1) {
+        this.password1 = password1;
     }
 
     public String getUsername() {
@@ -34,29 +36,19 @@ public class User extends ActionSupport {
         this.password = password;
     }
 
-    public User(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public User() {
-    }
     public String execute() throws Exception {
+       /* HttpServletRequest req = null;
+        String un=req.getParameter("username");
+        String pw=req.getParameter("password");
+        String pw2=req.getParameter("password");*/
         // TODO Auto-generated method stub
         ArrayList<String> userList = new ArrayList<String>();
         userList.add(username);
         userList.add(password);
-        LoginServlet login = new LoginServlet();
-        boolean mark = login.checkLogin(userList);
+        userList.add(password1);
+        RegisterServlet registerServlet = new RegisterServlet();
+        boolean mark = registerServlet.checkRegistry(userList);
         if(mark) return "success";
         else return "error";
     }
-
-   /* public String execute(){
-        if(getUsername().equals("liang")&& getPassword().equals("liang")){
-            return "success";
-        }
-        return "error";
-    }*/
 }

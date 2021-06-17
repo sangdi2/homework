@@ -1,11 +1,12 @@
 package utils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
 public class MysqlConnection {
-    private static MysqlConnection mysqlConnection=new MysqlConnection();
+    /*private static MysqlConnection mysqlConnection=new MysqlConnection();
     public static Connection connection;
     public static MysqlConnection getInstance(){
         if(mysqlConnection==null){
@@ -16,23 +17,31 @@ public class MysqlConnection {
             }
         }
         return mysqlConnection;
-    }
-    public Connection getConnection() throws IOException, ClassNotFoundException, SQLException {
-        Properties properties=new Properties();
-        properties.load(this.getClass().getResourceAsStream("/mysql.properties"));
-        String jdbcDriver;
-        //主机
-        String jdbcUrl;
-        //数据库用户名
-        String userName;
-        String password;
-        jdbcDriver = properties.getProperty("DRIVER");
-        jdbcUrl = properties.getProperty("URL");
-        userName = properties.getProperty("USERNAME");
-        password = properties.getProperty("PASSWORD");
-        Class.forName(jdbcDriver);
-        connection = DriverManager.getConnection(jdbcUrl, userName, password);
-        return connection;
+    }*/
+    public static Connection getConnection() throws IOException, ClassNotFoundException, SQLException {
+        /**
+         * 步骤：
+         *  1. 声明  driver、jdbcUrl、user、password 四个变量
+         *  2. 新建 jdbc.properties 配置文件，使其在不改源码情况下，变更数据库
+         *  3. 获取 jdbc.properties 文件参数，利用Java反射和输入流方式获取
+         *  4. Class.forName(driver);加载驱动
+         *  5. 获取连接实例
+         */
+        String driver =null;
+        String jdbcUrl =null;
+        String user =null;
+        String password =null;
+
+        InputStream inputStream = MysqlConnection.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        driver = properties.getProperty("driver");
+        jdbcUrl = properties.getProperty("jdbcUrl");
+        user = properties.getProperty("user");
+        password = properties.getProperty("password");
+        Class.forName(driver);
+        Connection conn = (Connection) DriverManager.getConnection(jdbcUrl, user, password);
+        return conn;
     }
     public static void release(Statement statement, Connection conn, ResultSet result) {
         try {
@@ -58,3 +67,8 @@ public class MysqlConnection {
         }
     }
 }
+/*class A{
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+        MysqlConnection.getConnection();
+    }
+}*/
