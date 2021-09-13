@@ -13,86 +13,85 @@
 </head>
 <style>
     body{
-        text-align:center;
-        background: url("image/17.jpg") fixed center center no-repeat;
-        background-size: cover;
-        width: 100%;
-    }
-    #center{
-        margin:0 auto;
-        border:1px soild #000;
-        width:300px;
-        height:300px
-    }
-    *{
-        padding: 0;
         margin: 0;
+        padding: 0;
+        background-image: url("img/zhuce.jpg");
+        background-repeat: no-repeat;
+        background-size:100%;
+        background-position: 0px -50px;
     }
-    .black_half{
-        padding: 25px;
-        background-color: rgba(0,0,0,0.5);
+    .box{
+        width: 300px;
+        padding: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background-color: #00000068;
+        text-align: center;
     }
-    .black_half h1{
+
+    .box input[type = "text"],.box input[type = "password"]{
+        border: 0;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #c8d6e5;
+        padding: 14px 10px;
+        outline: none;
+        color: #ffffff;
+        border-radius: 24px;
+        transition: 0.25s;
+    }
+    h1{
         color: #FFFFFF;
+        text-transform: uppercase;
+        font-weight: 500;
     }
-    .black_half a{
-        text-decoration:none;
-        color: #FFFFFF;
+
+    .box input[type = "text"]:focus, .box input[type = "password"]:focus{
+        width: 280px;
+        border-color: #FFFFFF;
     }
-    .black_half a:hover{
-        text-decoration:underline;
-        color: #FFFFFF;
+    .box input[type = "submit"]{
+        border: 0;
+        font-size: 17px;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        border: 2px solid #FFFFFF;
+        padding: 14px 40px;
+        outline: none;
+        color: #ffffff;
+        border-radius: 24px;
+        transition: 0.25s;
+        cursor: pointer;
     }
-    .white h3{
-        color: #FFFFFF;
+    .box input[type = "submit"]:hover{
+        background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+        font-size: x-large;
+
     }
+
 </style>
 
 <body>
 <div id = center>
     <form action="register.action" method="post"
-          name = "regfrm" onsubmit="return validate();">
-        <table class="hovertable">
-            <tr>
-                <td colspan="5" align="center" style="font-size:30px;
-    height:80px;width:300px;">
-                    <strong>注册</strong></td>
-            </tr>
-            <tr >
-                <th>用户名：</th>
-                <td><input type="text" name="username"
-                           value="输入16个字符以内" maxlength="16"
-                           onfocus="if(this.value == '输入16个字符以内') this.value =''">
-                </td>
-            </tr>
-            <tr>
-                <th>输入密码：</th>
-                <td><input type="text" name="password"
-                           value="输入20个字符以内"
-                           maxlength="20" style="width:200px;"
-                           onfocus="if(this.value == '输入20个字符以内')
-    {this.value =''; this.type='password'}"></td>
-            </tr>
-            <tr>
-                <th>确认密码：</th>
-                <td><input type="text" name="double_times"
-                           value="请再次输入密码" maxlength="20" style="width:200px;"
-                           onfocus="if(this.value == '请再次输入密码')
-    {this.value =''; this.type='password'}">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value=" 注  册  ">
-                    <input type ="button" value=" 返回登陆  "
-                           onclick="location='login.jsp'">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5" align="center"><a href="index.jsp">
-                    返 回 主 页 </a></td>
-            </tr>
-        </table>
+          name = "regfrm" onsubmit="return validate();" class="box">
+
+
+        <h1>Register</h1>
+
+
+        <input type="text"name="username"placeholder="UserName" />
+        <input type="password"name="password"placeholder="UserPassword" />
+
+                    <input type="submit" value=" Register ">
+
+
     </form>
 </div>
 </body>

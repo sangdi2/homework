@@ -13,20 +13,50 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <base href="<%=basePath%>">    <title>My JSP 'error.jsp' starting page</title>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
+    <base href="<%=basePath%>">    <title>My JSP 'error.jsp' starting page</title>
     <meta http-equiv="keywords"
           content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
     <!--
     <link rel="stylesheet" type="text/css" href="styles.css">
     -->
+    <style>
+        body {
+            background-image: url("img/error.jpg");
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: 100%;
+        }
+        .k {
+            width:944px ;
+            height: 322px;
+            background-color: rgba(0,0,0,.3);
+            margin:180px auto ;
+            text-align: center;
+            padding-top: 60px;
+        }
+        a {
+            display: block;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            margin: 20px;
+
+        }
+
+
+
+    </style>
 </head>
 
 <body>
-Struts2Demo<br>
-登录失败！
+
+<div class="k">
+    <div class="xin"><a href="#">用户名或密码输入错误</a>
+        <a href="#">登陆失败</a></div>
+</div>
 </body>
 </html>
